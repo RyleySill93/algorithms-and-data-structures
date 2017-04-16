@@ -1,7 +1,3 @@
-
-
-
-
 function oneAway(str1, str2) {
   let seen = new Object();
   let diff = 0;
@@ -29,4 +25,19 @@ function oneAway(str1, str2) {
   } else {
     return diff > 1 ? false : true;
   }
+}
+
+function compression(str) {
+  let arr = [];
+  let returnStr = true;
+  str.split("").forEach(char => {
+    let last = arr[arr.length - 1];
+    if (arr.length !== 0 && last[0] === char) {
+      last[1] += 1;
+      returnStr = false;
+    } else {
+      arr.push([char, 1]);
+    }
+  });
+  return returnStr ? str : [].concat.apply([], arr).join("");
 }
