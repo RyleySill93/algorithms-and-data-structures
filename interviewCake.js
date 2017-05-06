@@ -36,9 +36,45 @@ function products(arr) {
   return newArr;
 }
 
-  [1, 7, 3, 4]
+//Highest Product of 3
+function highestProd(arr) {
+  let highPositives = [];
+  let largeNegatives = [];
+  for (let i = 0; i < arr.length; i++) {
+    let num = arr[i];
+    if (num >= 0) {
+      if (highPositives.length < 3) {
+        highPositives.push(num);
+      } else {
+        highPositives = highPositives.sort();
+        if (num > highPositives[0]) {
+          highPositives[0] = num;
+        }
+      }
+    } else {
+      if (largeNegatives.length < 2) {
+        largeNegatives.push(num);
+      } else {
+        largeNegatives = largeNegatives.sort();
+        if (num < largeNegatives[0]) {
+          largeNegatives[0] = num;
+        }
+      }
+    }
+  }
 
-  [84, 12, 28, 21]
+  highPositives = highPositives.sort();
+  let positiveProd = highPositives[0] * highPositives[1] * highPositives[2];
+
+  if (largeNegatives.length > 1) {
+    let negativeProd = largeNegatives[0] * largeNegatives[1] * highPositives[highPositives.length - 1];
+    if (negativeProd > positiveProd) {
+      return negativeProd;
+    } else {
+      return positiveProd;
+    }
+  }
+}
 
 function overlap(rect1, rect2) {
   let xOverlap = getXOverlap(rect1, rect2);
