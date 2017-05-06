@@ -1,3 +1,45 @@
+//Apple Stocks
+function stockPicker(prices) {
+  let minSoFar = prices[0];
+  let maxProfit = prices[1] - prices[0];
+
+  for (let i = 1; i < prices.length; i++) {
+    if (prices[i] - minSoFar > maxProfit) {
+      maxProfit = prices[i] - minSoFar;
+    }
+    if (minSoFar > prices[i]) {
+      minSoFar = prices[i];
+    }
+  }
+  if (maxProfit < 0) {
+    return false;
+  }
+  return maxProfit;
+}
+
+//Product of all other numbers
+function products(arr) {
+  let prodSoFar = 1;
+  let newArr = new Array(arr.length);
+  for (let i = 0; i < arr.length; i++) {
+    let res = arr[i] * prodSoFar;
+    prodSoFar = res;
+    newArr[i] = res;
+  }
+
+  let prodSoFar2 = 1;
+  for (let i = arr.length - 1; i >= 0; i--) {
+    let res2 = newArr[i] * prodSoFar2;
+    prodSoFar2 = res2;
+    newArr[i] = res2;
+  }
+  return newArr;
+}
+
+  [1, 7, 3, 4]
+
+  [84, 12, 28, 21]
+
 function overlap(rect1, rect2) {
   let xOverlap = getXOverlap(rect1, rect2);
   let yOverlap = getYOverlap(rect1, rect2);
@@ -50,4 +92,9 @@ function validBST(node, min = null, max = null) {
   }
 
   return validBST(node.left, min, node.val) && validBST(node.right, max, node.val)
+}
+
+function validParens(str) {
+  let openerStack = [];
+
 }
