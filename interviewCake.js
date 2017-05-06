@@ -1,3 +1,5 @@
+////////Making Change, product of all other numbers
+
 //Apple Stocks
 function stockPicker(prices) {
   let minSoFar = prices[0];
@@ -76,9 +78,60 @@ function highestProd(arr) {
   }
 }
 
+
+[
+  {startTime: 0,  endTime: 1},
+  {startTime: 3,  endTime: 5},
+  {startTime: 4,  endTime: 8},
+  {startTime: 10, endTime: 12},
+  {startTime: 9,  endTime: 10},
+]
+
+//Merging Meeting times
+function meetingTimes(times) {
+  let sorted = times.sort((a,b) => a.startTime < b.startTime ? -1 : 1);
+  let currentStart = sorted[0].startTime;
+  let currentEnd = sorted[0].endTime;
+  let merged = [];
+  for (let i = 1; i < sorted.length; i++) {
+    let currentBlock = sorted[i];
+    if (currentBlock.startTime <= currentEnd && currentBlock.endTime > currentEnd) {
+      currentEnd = currentBlock.endTime;
+    } else {
+      merged.push({startTime: currentStart, endTime: currentEnd});
+      currentStart = currentBlock.startTime;
+      currentEnd = currentBlock.endTime;
+    }
+  }
+
+  merged.push({startTime: currentStart, endTime: currentEnd});
+
+  return merged;
+}
+
+4
+1,2,3
+//Making Change
+function makingChange(amount, coins, index = 0) {
+  if (amount === 0) { return 1; }
+  if (amount < 0) { return 0; }
+  if (index > coins.length - 1) { return 0; }
+
+
+
+}
+
 function overlap(rect1, rect2) {
-  let xOverlap = getXOverlap(rect1, rect2);
-  let yOverlap = getYOverlap(rect1, rect2);
+  let xOverlap = getOverlap(rect1.leftX, rect1.width, rect2.leftX, rect2.width);
+  let yOverlap = getOverlap(rect1.bottomY, rect1.height, rect2.bottomY, rect2.bottomY);
+  if (xOverlap.point === null || yOverlap.point === null) {
+    return {
+      leftX: null,
+      bottomY: null,
+      width: null,
+      height: null
+    };
+  }
   return {
     leftX: xOverlap.point,
     bottomY: yOverlap.point,
@@ -87,18 +140,9 @@ function overlap(rect1, rect2) {
   };
 }
 
-function getXOverlap(rect1, rect2) {
-  let largerStart = Math.max(rect1.leftX, rect2.leftX);
-  let smallerEnd = Math.min(rect1.leftX + rect1.width, rect2.leftX + rect2.width);
-  if (largerStart >= smallerEnd) {
-    return {point: null, size: null};
-  }
-  return {point: largerStart, size: smallerEnd - largerStart};
-}
-
-function getYOverlap(rect1, rect2) {
-  let largerStart = Math.max(rect1.bottomY, rect2.bottomY);
-  let smallerEnd = Math.min(rect1.bottomY + rect1.height, rect2.bottomY + rect2.height);
+function getOverlap(point1, size1, point2, size2) {
+  let largerStart = Math.max(point1, point2);
+  let smallerEnd = Math.min(point1 + size1, point2 + size2);
   if (largerStart >= smallerEnd) {
     return {point: null, size: null};
   }
